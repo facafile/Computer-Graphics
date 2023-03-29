@@ -1,0 +1,64 @@
+using UnityEngine;
+using UnityEngine.UI;
+
+namespace Assets.Scripts
+{
+    /// <summary>
+    /// Class for viewing information about hierarchy and katamari mass
+    /// </summary>
+    public class PlayerInformation : MonoBehaviour
+    {
+        
+        [SerializeField] private Text _katamariMass = null;
+        [SerializeField] private Text _hierarchy = null;
+        private Rigidbody _katamari = null;
+        private Renderer [] _renderers = null;
+
+        /// <summary>
+        /// Start is called before the first frame update.
+        /// Initialize Rigidbody component.
+        /// </summary>
+        private void Start()
+        {
+            _katamari = GetComponent<Rigidbody>();
+            _katamariMass.color = Color.white;
+            _hierarchy.color = Color.white;
+            
+        }
+
+        /// <summary>
+        /// Update is called once per frame.
+        /// Get rendered objects and update the view of hierarchy and katamari ball mass
+        /// </summary>
+        private void Update()
+        {
+         // Update katamariMass
+            _hierarchy.text = "Hierarchy:\n";
+            if (_katamari != null)
+            {
+                _katamariMass.text = "Katamari Mass: " + _katamari.mass.ToString();
+            }
+            PrintHierarchy(transform,"->");
+            
+           
+        }
+        void PrintHierarchy(Transform currentTransform, string indent)
+        {
+            _hierarchy.text += indent + currentTransform.gameObject.name + "\n";
+
+            // Print all rigidbodies
+            Rigidbody[] rigidbodies = currentTransform.GetComponentsInChildren<Rigidbody>();
+        
+
+            // Recursively print children
+            foreach (Transform child in currentTransform)
+            {
+                PrintHierarchy(child,"   " + indent);
+            }
+            return;
+
+        }
+       
+    }
+     
+}

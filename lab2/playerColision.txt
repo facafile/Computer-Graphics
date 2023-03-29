@@ -1,0 +1,75 @@
+using System.Collections.Generic;
+using UnityEngine;
+
+
+/// <summary>
+/// Class that implements actions during a collision.
+/// </summary>
+public class PlayerCollision : MonoBehaviour
+{
+    [SerializeField] private GameObject _stickyItems = null;
+    private Dictionary<string, float> _oldMassesOfStickyItems = null;
+
+    /// <summary>
+    /// Start is called before the first frame update.
+    /// Initialize storage for masses of sticky items.
+    /// </summary>
+    private void Start()
+    {
+        _oldMassesOfStickyItems = new Dictionary<string, float>();
+    }
+
+    /// <summary>
+    /// On a collision check if the collision object has a tag "Sticky", otherwise ignore it.
+    /// If an object has a tag "Sticky" and has a smaller mass than katamari ball, add it to the katamari ball, 
+    /// store it's mass to the storage and add it to the katamari ball's mass.
+    /// If an object has a tag "Sticky" and has a greater mass than katamari ball, get its previous mass and 
+    /// substract katamari ball's mass by it and remove the object with it's previous mass.
+    /// </summary>
+    /// <param name="collision">Object that katamari ball has collided with.</param>
+    private void OnCollisionEnter(Collision collision)
+    {
+        float childMass = collision.gameObject.GetComponent<Rigidbody>().mass;
+        string childName = collision.gameObject.name;
+        float katamariMass = GetKatamariMass();
+
+        if (collision.gameObject.CompareTag("Sticky")  && childMass < katamariMass && !_oldMassesOfStickyItems.ContainsKey(childName))
+        {
+                _oldMassesOfStickyItems.Add(childName,childMass);
+
+                ContactPoint contact = collision.GetContact(0);
+                Collider collider2 = contact.otherCollider;
+                //Debug.Log(contact.thisCollider);
+                collision.transform.SetParent(contact.thisCollider.transform);
+
+                UpdateKatamariMass(childMass,"add");
+                
+                Destroy(collider2.GetComponent<Rigidbody>());
+        }
+        
+    }
+
+    /// <summary>
+    /// A helper function to get katamari ball's current mass.
+    /// </summary>
+    /// <returns>Mass of the katamari ball</returns>
+    private float GetKatamariMass()
+    {
+        return gameObject.GetComponent<Rigidbody>().mass;
+    }
+
+    /// <summary>
+    /// A helper function to change katamari ball's mass.
+    /// </summary>
+    /// <param name="mass">Mass to be added to katamari ball.</param>
+    /// <param name="operation">Determines the type of operation that will be performed (substraction or addition)</param>
+    private void UpdateKatamariMass(float mass, string operation)
+    {
+        if (operation == "add")
+            gameObject.GetComponent<Rigidbody>().mass += mass;
+        else if (operation == "substract")
+            gameObject.GetComponent<Rigidbody>().mass -= mass;
+        else
+            Debug.Log("Error while doing operation.");
+    }
+}

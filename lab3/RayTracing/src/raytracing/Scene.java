@@ -123,7 +123,7 @@ public class Scene {
 
       //spekularno
       //if (R.dotProduct(V) > 0)
-      //  local = local.add(light.multiple(closest.getKs()).multiple(Math.pow(R.dotProduct(V), closest.getN())));
+      // local = local.add(light.multiple(closest.getKs()).multiple(Math.pow(R.dotProduct(V), closest.getN())));
     }
 
     ColorVector lighting = local;

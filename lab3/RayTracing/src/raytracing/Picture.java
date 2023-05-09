@@ -32,7 +32,7 @@ public class Picture extends JFrame {
    */
   public Picture() {
 
-    FileReader fileReader=new FileReader("Input.txt");
+    FileReader fileReader=new FileReader("Input2.txt");
     fileReader.read();
 
     eyePosition=fileReader.getEyePosition();

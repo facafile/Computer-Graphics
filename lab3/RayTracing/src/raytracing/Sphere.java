@@ -47,6 +47,7 @@ public class Sphere extends Object{
         Vector pc = new Vector(ray.startingPoint, this.centerPosition);
         Double angle = ray.direction.getAngle(pc);
 
+        //Ako je kut veći od 90 stupnjeva vrati false (neće se sudariti)
         if (angle - Math.PI / 2 > Epsilon)
             return  false;
 

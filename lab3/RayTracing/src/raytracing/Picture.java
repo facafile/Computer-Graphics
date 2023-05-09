@@ -4,7 +4,7 @@ package raytracing;
  * <p>Title: Picture</p>
  * <p>Description: </p
  * Klasa koja stvara realisticnu sliku pomocu ray tracinga. Svi potrebni
- * parametri unose se pomocu datoteke Input.txt.
+ * parametri unose se pomocu datoteke Input2.txt.
  * <p>Copyright: Copyright (c) 2003</p>
  * @author Milenka Gadze, Miran Mosmondor
  * @version 1.1
@@ -25,7 +25,7 @@ public class Picture extends JFrame {
   private Point eyePosition;
 
   /**
-   * Konstruktor koji pomocu klase FileReader iz datoteke Input.txt uzima i
+   * Konstruktor koji pomocu klase FileReader iz datoteke Input2.txt uzima i
    * postavlja sve potebne parametre za crtanje slike : poziciju oka, rezoluciju
    * ekrana (slike), velicinu ekrana, poziciju svijetla u sceni, broj objekata u
    * sceni, te parametre svih kugli u sceni.

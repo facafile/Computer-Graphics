@@ -114,13 +114,16 @@ public class Scene {
     }
 
     if(!this.shadow(intersectionPoint)){
-      //difuzno
-      if (L.dotProduct(N) > 0)
+      //difuzno i spekularno
+      if (L.dotProduct(N) > 0){
         local = local.add(light.multiple(closest.getKd()).multiple(L.dotProduct(N)));
+        local = local.add(light.multiple(closest.getKs()).multiple(Math.pow(R.dotProduct(V), closest.getN())));
+      }
+
 
       //spekularno
-      if (R.dotProduct(V) > 0)
-        local = local.add(light.multiple(closest.getKs()).multiple(Math.pow(R.dotProduct(V), closest.getN())));
+      //if (R.dotProduct(V) > 0)
+      //  local = local.add(light.multiple(closest.getKs()).multiple(Math.pow(R.dotProduct(V), closest.getN())));
     }
 
     ColorVector lighting = local;

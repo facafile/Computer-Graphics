@@ -1,3 +1,0 @@
-Stol i stolicu sam napravio tako da sam od kocke napravio tanku plohu koja mi je površina stola i stolice i onda sam koristeci metodu loop cut napravio cetri zasebna dijela u rubovima poje plohe koje sam samo izvukao u dubinu i to mi je činilo noge stola i stolice i naslon na stolici.
-Za inicijal F sam koristio početni model kocke koji sam izdužio koristeći metodu kako u uputama laboratorijske vježbe("extrude region")
-za inicijal Š sam koristio krivulju koju sam oblikovao u slovo S zatim joj dodao dubinu i pretvorio u mesh. Za kraj sam popunio rubove cilindra i dodao kvačicu korištenjem modela kocke kojeg sam izmanipulirao

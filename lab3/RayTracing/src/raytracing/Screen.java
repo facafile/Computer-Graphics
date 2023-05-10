@@ -43,17 +43,7 @@ import java.awt.geom.*;
    * @return koordinate piksela u virtualnom prostoru
    */
   public Point getPoint(int i, int j) {
-      //double windowSizeInPixels = resolution / (double) size;
-      //double x = i / windowSizeInPixels - 1.0;
-      //double y = j / windowSizeInPixels  - 1.0;
-      //double z = 0.0;
-      //return new Point(x, y, z);
-      double xkordinata,ykordinata;				//dijelin rezoluciju sa velicinom te s time dijelin i/-j minus/plus rezolucija/2. sa time dobivan polozaj tocaka na ekranu
-
-      xkordinata = (i-resolution/2.) / ( (double)resolution/size );
-      ykordinata = (-j+resolution/2.) / ( (double)resolution/size );
-      Point tocka = new Point( xkordinata, ykordinata, 0);
-
-      return tocka;
+      //pretvaranje u normalizirane ekrana iz kartezijevih kordinata (flippanje osi y)
+      return new Point((i - this.resolution / 2) / ( this.resolution / size), (this.resolution / 2 - j) / (this.resolution / size ), 0);
   }
 }

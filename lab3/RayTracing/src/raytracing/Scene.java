@@ -52,8 +52,10 @@ public class Scene {
    * @return true ako postoji sjena u tocki presjeka, false ako ne postoji
    */
   private boolean shadow(Point intersection) {
+    //napravi zraku iz trenutne tocke u smjeru ivora svjetlosti
     Ray returning = new Ray(intersection, this.lightPosition);
     for (Sphere sp : sphere){
+      //ako se sjece s nekim predmetom vrati false
       if (sp.intersection(returning))
         return true;
     }
@@ -95,6 +97,7 @@ public class Scene {
     Vector L = new Vector(intersectionPoint, this.lightPosition);
     Vector R = L.getReflectedVector(N);
     Vector V = new Vector(intersectionPoint, ray.getStartingPoint());
+    double nI = closest.getNi();
 
     N.normalize();
     L.normalize();
@@ -106,11 +109,11 @@ public class Scene {
     //ambientalno
     local = local.add(ambientLight.multiple(closest.getKa()));
 
-    double nI = closest.getNi();
-    double vn = V.dotProduct(N);
-    if( vn < 0 ) {
-      N = N.multiple( -1 );
+    //korekcija normale da bi prikazivala da dolazi iz smjera upadne zrake, ako je ovo potrebno uzmi reciprocnu vrijednost nI
+    if( V.dotProduct(N) < 0 ) {
       nI = 1./nI;
+      N = N.multiple( -1 );
+
     }
 
     if(!this.shadow(intersectionPoint)){
@@ -120,10 +123,6 @@ public class Scene {
         local = local.add(light.multiple(closest.getKs()).multiple(Math.pow(R.dotProduct(V), closest.getN())));
       }
 
-
-      //spekularno
-      //if (R.dotProduct(V) > 0)
-      // local = local.add(light.multiple(closest.getKs()).multiple(Math.pow(R.dotProduct(V), closest.getN())));
     }
 
     ColorVector lighting = local;

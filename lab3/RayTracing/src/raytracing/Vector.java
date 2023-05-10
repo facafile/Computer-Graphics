@@ -156,6 +156,7 @@ public class Vector {
    * @return reflektirani vektor
    */
   public Vector getReflectedVector(Vector normal) {
+    //R = (2U•N )N-U
     return normal.multiple(this.multiple(2).dotProduct(normal)).sub(this);
 
   }
@@ -169,6 +170,7 @@ public class Vector {
    * @return refraktirani vektor
    */
   public Vector getRefractedVector(Vector normal, double nI) {
+    //R = - a·N - b·U, D=4*(b2 *(cos)2 −b2 +1), a= (−2*b*cos+ D)/2
     double b = nI;
     double aplha = this.getAngle(normal);
     double D = 4 * (Math.pow(b, 2) * Math.pow(Math.cos(aplha), 2) - Math.pow(b, 2) + 1);
